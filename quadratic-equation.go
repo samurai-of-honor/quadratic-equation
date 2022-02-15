@@ -16,7 +16,7 @@ func main() {
 	if len(checkArg) > 1 {
 		file, err := os.Open(checkArg[1])
 		if err != nil {
-			panic(err)
+			panic("file does not exist")
 		}
 		defer file.Close()
 
@@ -24,7 +24,10 @@ func main() {
 		for str.Scan() {
 			number, err := strconv.ParseFloat(str.Text(), 64)
 			if err != nil {
-				panic(err)
+				panic("invalid file format")
+			}
+			if argumentIndex == 0 && number == 0 {
+				panic("Error. a cannot be 0")
 			}
 			switch {
 			case argumentIndex == 0:
@@ -72,7 +75,7 @@ func inputArg(arg string) float64 {
 		}
 		result, convertErr := strconv.ParseFloat(string(str), 64)
 		if convertErr != nil {
-			Println(convertErr)
+			Printf("Error. Expected a valid real number, got %s instead\n", str)
 		} else {
 			return result
 		}
