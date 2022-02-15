@@ -20,7 +20,12 @@ func main() {
 		}
 		defer file.Close()
 
-		str, _, _ := bufio.NewScanner(file).ReadLine()
+		str := bufio.NewScanner(file)
+		for str.Scan() {
+			number, err := strconv.ParseFloat(str.Text(), 64)
+			if err != nil {
+				panic(err)
+			}
 			switch {
 			case argumentIndex == 0:
 				a = number
